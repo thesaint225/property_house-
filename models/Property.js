@@ -11,7 +11,6 @@ const PropertySchema = new Schema(
       type: String,
       required: true,
     },
-
     type: {
       type: String,
       required: true,
@@ -93,3 +92,5 @@ const PropertySchema = new Schema(
 );
 
 const Property = models.Property || model("Property", PropertySchema);
+
+export default Property;

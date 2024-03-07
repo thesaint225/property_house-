@@ -1,8 +1,21 @@
 import connectedDB from "@/config/database";
+import Property from "@/models/Property";
+import User from "@/models/User";
+
+// Get /api /properties
 export const GET = async (request) => {
   try {
     await connectedDB();
-    return new Response(JSON.stringify({ message: "hello World" }), {
+
+    // 65e821685896e6b79285cef5
+
+    const properties = await Property.find({});
+
+    console.log(properties);
+    return new Response(JSON.stringify(properties), {
+      status: 200,
+    });
+    return new Response(JSON.stringify(User), {
       status: 200,
     });
   } catch (error) {
