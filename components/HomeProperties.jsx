@@ -1,17 +1,6 @@
 import PropertyCard from "@/components/PropertyCard";
 import Link from "next/link";
-
-async function fetchProperties() {
-  try {
-    const res = await fetch("http://localhost:3000/api/properties/");
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return res.json();
-  } catch (error) {
-    console.log(error);
-  }
-}
+import { fetchProperties } from "@/Utils/request";
 
 const HomeProperties = async () => {
   const properties = await fetchProperties();
@@ -27,12 +16,12 @@ const HomeProperties = async () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* {recentProperties === 0 ? (
-              <P>No Properties Found</P>
-            ) : (
-              recentProperties.map((property) => (
-                <PropertyCard key={property._id} property={property} />
-              ))
-            )} */}
+                <P>No Properties Found</P>
+              ) : (
+                recentProperties.map((property) => (
+                  <PropertyCard key={property._id} property={property} />
+                ))
+              )} */}
             {recentProperties === 0 ? (
               <p>No Properties Found</p>
             ) : (
