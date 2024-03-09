@@ -5,6 +5,7 @@ import { fetchProperty } from "@/Utils/request";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import Link from "next/link";
 import PropertyDetails from "@/components/PropertyDetails";
+import Spinner from "@/components/Spinner";
 import { FaArrowLeft } from "react-icons/fa";
 
 const Propertypage = () => {
@@ -37,6 +38,8 @@ const Propertypage = () => {
   }
   return (
     <>
+      {loading && <Spinner loading={loading} />}
+
       {!loading && property && (
         <>
           <PropertyHeaderImage image={property.images[0]} />
