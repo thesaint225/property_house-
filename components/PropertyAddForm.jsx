@@ -13,6 +13,12 @@ const PropertyAddForm = () => {
       state: "Test State",
       zipcode: "",
     },
+    seller_info: {
+      name: "",
+      city: "test City",
+      state: "Test State",
+      zipcode: "",
+    },
     beds: "3",
     baths: "2",
     square_Feet: "1800",
@@ -31,7 +37,10 @@ const PropertyAddForm = () => {
   });
 
   const handleChange = (e) => {
+    console.log(e.target);
     const { name, value } = e.target;
+
+    console.log(name);
     // Check if nested property
     if (name.includes(".")) {
       const [outerKey, innerKey] = name.split(".");
@@ -81,7 +90,10 @@ const PropertyAddForm = () => {
       updatedImages.push(file);
     }
     // update state with array of image
-    setFields();
+    setFields((prevFields) => ({
+      ...prevFields,
+      images: updatedImages,
+    }));
   };
 
   useEffect(() => {
@@ -89,7 +101,11 @@ const PropertyAddForm = () => {
   }, []);
   return (
     mounted && (
-      <form>
+      <form
+        action="/api/properties"
+        method="POST"
+        encType="multipart/form-data"
+      >
         <h2 className="text-3xl text-center font-semibold mb-6">
           Add Property
         </h2>
@@ -148,17 +164,26 @@ const PropertyAddForm = () => {
           ></textarea>
         </div>
 
+        <input
+          type="text"
+          id="street"
+          name="location.street"
+          className="border rounded w-full py-2 px-3 mb-2"
+          placeholder="Street"
+          value={fields.location.street}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          id="seller_info"
+          name="seller_info.name"
+          className="border rounded w-full py-2 px-3 mb-2"
+          placeholder="seller_info"
+          value={fields.seller_info.name}
+          onChange={handleChange}
+        />
         <div className="mb-4 bg-blue-50 p-4">
           <label className="block text-gray-700 font-bold mb-2">Location</label>
-          <input
-            type="text"
-            id="street"
-            name="location.street"
-            className="border rounded w-full py-2 px-3 mb-2"
-            placeholder="Street"
-            value={fields.location.street}
-            onChange={handleChange}
-          />
           <input
             type="text"
             id="city"
@@ -451,7 +476,7 @@ const PropertyAddForm = () => {
                 name="rates.weekly"
                 className="border rounded w-full py-2 px-3"
                 value={fields.rates.weekly}
-                onChanged={handleChange}
+                onChange={handleChange}
               />
             </div>
             <div className="flex items-center">
@@ -464,7 +489,7 @@ const PropertyAddForm = () => {
                 name="rates.monthly"
                 className="border rounded w-full py-2 px-3"
                 value={fields.rates.monthly}
-                onChanged={handleChange}
+                onChange={handleChange}
               />
             </div>
             <div className="flex items-center">
@@ -477,7 +502,7 @@ const PropertyAddForm = () => {
                 name="rates.nightly"
                 className="border rounded w-full py-2 px-3"
                 value={fields.rates.nightly}
-                onChanged={handleChange}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -492,13 +517,22 @@ const PropertyAddForm = () => {
           </label>
           <input
             type="text"
-            id="seller_name"
-            name="seller_info.name."
+            id="seller_info"
+            name="seller_info.name"
             className="border rounded w-full py-2 px-3"
             placeholder="Name"
             value={fields.seller_info.name}
-            onChanged={handleChange}
+            onChange={handleChange}
           />
+          {/* <input
+            type="text"
+            id="seller_info"
+            name="seller_info.name"
+            className="border rounded w-full py-2 px-3 mb-2"
+            placeholder="seller_info"
+            value={fields.seller_info.name}
+            onChange={handleChange}
+          /> */}
         </div>
         <div className="mb-4">
           <label
@@ -515,7 +549,7 @@ const PropertyAddForm = () => {
             placeholder="Email address"
             required
             value={fields.seller_info.email}
-            onChanged={handleChange}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-4">
@@ -532,7 +566,7 @@ const PropertyAddForm = () => {
             className="border rounded w-full py-2 px-3"
             placeholder="Phone"
             value={fields.seller_info.phone}
-            onChanged={handleChange}
+            onChange={handleChange}
           />
         </div>
 
@@ -551,6 +585,7 @@ const PropertyAddForm = () => {
             accept="image/*"
             multiple
             onChange={handleImageChange}
+            required
           />
         </div>
 
