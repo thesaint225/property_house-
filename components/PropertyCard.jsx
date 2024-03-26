@@ -12,18 +12,18 @@ import {
 const PropertyCard = ({ property }) => {
   const getRateDisplay = () => {
     const { rates } = property;
-    if (rates.monthly) {
+    if (rates && rates.monthly) {
       return `${rates.monthly.toLocaleString()}/mo`;
-    } else if (rates.weekly) {
+    } else if (rates && rates.weekly) {
       return `${rates.weekly.toLocaleString()}/wk`;
-    } else if (rates.nightly) {
+    } else if (rates && rates.nightly) {
       return `${rates.nightly.toLocaleString()}/night`;
     }
   };
   return (
     <div className="bg-white rounded-xl shadow-md relative">
       <Image
-        src={`/images/properties/${property.images[0]}`}
+        src={property.images[0]}
         alt=""
         height={0}
         width={0}
@@ -56,18 +56,19 @@ const PropertyCard = ({ property }) => {
         </div>
 
         <div className="flex justify-center gap-4 text-green-900 text-sm mb-4">
-          {property.rates.nightly && (
+          {/* bugs to fix */}
+          {property.rates && property.rates.nightly && (
             <p>
               <FaMoneyBill className="inline mr-2" /> Nightly
             </p>
           )}
-
-          {property.rates.weekly && (
+          {/* bugs to fix */}
+          {property.rates && property.rates.weekly && (
             <p>
               <FaMoneyBill className="inline mr-2" /> weekly
             </p>
           )}
-          {property.rates.monthly && (
+          {property.rates && property.rates.monthly && (
             <p>
               <FaMoneyBill className="inline mr-2" /> monthly
             </p>
